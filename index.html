@@ -2,6 +2,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 <style>
 *,
 *:before,
@@ -19,8 +20,16 @@ body {
 body {
     background: #fff;
     overflow: hidden;
+    font-family: 'Open Sans', sans-serif;
+
 }
 
+.container {
+  position: relative;
+  padding: 2rem 0;
+      width: 100vw;
+    height: 100vh;
+}
 .demo {
     position: absolute;
     top:50%;
@@ -39,7 +48,7 @@ body {
     background: #fff;
     display: flex; 
     justify-content: space-between;
-    padding: 0.5rem 0.8rem;
+    padding: 0.5rem 0.8rem 0.7rem;
 }
 
 .demo__content {
@@ -126,8 +135,9 @@ body {
     overflow: hidden;
     width: 100%;
     height: 100%;
-    background-image: url("https://cdna.artstation.com/p/assets/images/images/014/942/924/large/tuan-anh-784512.jpg?1546425520");
+    background-image: url("https://scontent.fvca1-1.fna.fbcdn.net/v/t1.0-9/86183746_675208916558045_8759604835487055872_n.jpg?_nc_cat=103&_nc_ohc=N7ikart_eZ4AX8sEFsI&_nc_ht=scontent.fvca1-1.fna&oh=eb8d0888de47452a4db5bcaa2121b087&oe=5EFC4905");
     background-size: cover;
+    background-position: center;
     border-radius: 1rem;
 }
 
@@ -237,6 +247,7 @@ body {
 </style>
 </head>
 <body>
+<div class="container">
 <div class="demo">
   <div class="mobile__top">
     <div class="mobile__wifi">
@@ -282,6 +293,7 @@ body {
     <div class="card__btn"></div>
     <div class="card__btn"></div>
   </div>
+</div>
 </div>
 </body>
 <script
