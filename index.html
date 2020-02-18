@@ -4,6 +4,9 @@
 <script src="https://code.iconify.design/1/1.0.4/iconify.min.js"></script>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
 <style>
 *,
 *:before,
@@ -42,6 +45,7 @@ body {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
     border-radius: 1rem;
     overflow: hidden;
+    display: none;
 }
 
 .demo__header {
@@ -265,6 +269,45 @@ body {
   display: flex;
   opacity: 1;
 }
+
+.modal {
+  display: block; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.10), 0 6px 6px rgba(0,0,0,0.16);
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 </style>
 </head>
 <body>
@@ -312,6 +355,7 @@ body {
           class="video" type="text/html" 
           src="https://www.youtube.com/embed/DBXH9jJRaDk?autoplay=1&fs=1&iv_load_policy=1&showinfo=0&rel=0&cc_load_policy=0&start=0&end=0&origin=https://youtubeembedcode.com">
   </iframe>
+  
 </div>
   </div>
   <div class="card__footer">
@@ -322,6 +366,20 @@ body {
     <div class="card__btn"></div>
   </div>
 </div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+  <!-- Modal content -->
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <h1>Chào mừng các bạn!!!</h1>
+    <h4>Quẹt trái để coi video và lấy số</h4>
+    <h4>Quẹt phải để điền form bạn nhé!!!</h4>
+  </div>
+
+</div>
+
 </div>
 </body>
 <script
@@ -329,6 +387,8 @@ body {
   integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
   crossorigin="anonymous"></script>
 <script>
+
+
 $(document).ready(function() {
 
   var animating = false;
@@ -338,7 +398,6 @@ $(document).ready(function() {
   var pullDeltaX = 0;
   var deg = 0;
   var $card, $cardReject, $cardLike;
-
   function pullChange() {
     animating = true;
     deg = pullDeltaX / 10;
@@ -354,16 +413,11 @@ $(document).ready(function() {
 
     if (pullDeltaX >= decisionVal) {
       $card.addClass("to-right");
-      
+
     } else if (pullDeltaX <= -decisionVal) {
       $card.addClass("to-left");
-      $(".demo__card-cont").addClass("animated zoomOut");
-      $(".demo__card-cont").css("animation-duration", "1s");
-      setTimeout(function() {
-          $(".demo__card-cont").css("display", "none");
-      }, 1000);
-
-      $(".video__container").addClass("animated zoomIn show fast delay-1s");
+      hideCards();
+      showVideo();
     }
 
     if (Math.abs(pullDeltaX) >= decisionVal) {
@@ -392,6 +446,24 @@ $(document).ready(function() {
     }, 300);
   };
 
+  function hideCards() {
+    $(".demo__card-cont").addClass("animated zoomOut");
+    $(".demo__card-cont").css("animation-duration", "1s");
+    setTimeout(function() {
+        $(".demo__card-cont").css("display", "none");
+    }, 1000);
+
+  }
+
+  function showScreen() {
+    $(".demo").css("display", "block");
+    $(".demo").addClass("animated zoomIn");
+  }
+
+  function showVideo() {
+    $(".video__container").addClass("animated zoomIn show fast delay-1s");
+  }
+
   $(document).on("mousedown touchstart", ".demo__card:not(.inactive)", function(e) {
     if (animating) return;
 
@@ -413,6 +485,15 @@ $(document).ready(function() {
       release();
     });
   });
+
+
+  var span = document.getElementsByClassName("close")[0];
+
+  // When the user clicks on <span> (x), close the modal
+  span.onclick = function() {
+    $("#myModal").css("display", "none");
+    showScreen();
+  }
 
 });
 </script>
