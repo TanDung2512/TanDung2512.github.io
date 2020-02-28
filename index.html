@@ -65,7 +65,7 @@
     </div>    
   </div>
   <div class="card__footer">
-    <div class="card__btn"></div>
+    <div id="back" class="card__btn"></div>
     <div class="card__btn"></div>
     <div class="card__btn"></div>
     <div class="card__btn"></div>
@@ -80,18 +80,18 @@
     <div class="icon__wrapper">
       <img class="icon icon--big" src="/icons/party.svg" alt="Hello">
     </div>
-    <h1 class="my-1">Chào mừng bạn đến với TindS!!</h1>
-    <h4>
+    <h1 class="align-center my-1">Chào mừng bạn đến với TindS!!</h1>
+    <h3>
       <img class="icon icon--small d-float-l" src="/icons/play.svg" alt="Hello">
       Nếu bạn đã sẵn sàng về Nhà S Đỏ, hãy "match" với chúng mình bằng các quẹt phải nhé.
       <img class="icon icon--small" src="/icons/cool.svg" alt="Hello"> 
-    </h4>
+    </h3>
           
 
-    <h4><img class="icon icon--small" src="/icons/play.svg" alt="Hello">
+    <h3><img class="icon icon--small" src="/icons/play.svg" alt="Hello">
       Còn nếu bạn vẫn còn đang tìm kiếm một lý do thì ngại gì mà không quẹt trái. 
       Chúng mình có điều bất ngờ đang chờ bạn đó!
-      <img class="icon icon--small" src="/icons/gift.svg" alt="Hello"></h4>
+      <img class="icon icon--small" src="/icons/gift.svg" alt="Hello"></h3>
       
     <h2 class="align-center my-1">Bạn đã sẵn sàng chưaaa?</h2>
     <div class="align-center">
@@ -114,7 +114,7 @@
     /* 
 
     */
-
+  const DELAY = 500;
   var animating = false;
   var cardsCounter = 0;
   var numOfCards = 6;
@@ -122,6 +122,7 @@
   var pullDeltaX = 0;
   var deg = 0;
   var rotate = {};
+  var idTimeout = null;
   var $card, $cardReject, $cardLike;
   function pullChange() {
     animating = true;
@@ -134,8 +135,22 @@
     $cardLike.css("opacity", likeOpacity);
   };
 
-  function release() {
+  function getRandom() {
+    return Math.floor(Math.random() * (8 - 0 + 1))
+  }
+  function reset() {
+    //console.log(idTimeout);
+    idTimeout && clearTimeout(idTimeout);
+    idTimeout = null;
+    stopVideo && stopVideo();
+    $(".match__container").hide();
+    $(".video__container").hide();
+    $(".slots__container").hide();
+    //console.log("aaa");
+    showCards();
+  }
 
+  function release() {
     if (pullDeltaX >= decisionVal) {
       $card.addClass("to-right");
       hideCards();
@@ -173,40 +188,66 @@
   };
 
   function hideCards() {
+    $(".demo__card-cont").removeClass("animated zoomIn");
     $(".demo__card-cont").addClass("animated zoomOut");
-    $(".demo__card-cont").css("animation-duration", "1s");
+    $(".demo__card-cont").css("animation-duration", DELAY);
     setTimeout(function() {
         $(".demo__card-cont").hide();
-    }, 1000);
-
+    }, DELAY);
   }
 
   function showCards() {
     $(".demo__card-cont").removeClass("zoomOut");
-    $(".demo__card-cont").addClass("animated zoomIn fast delay-1s");
+    $(".demo__card-cont").addClass("animated zoomIn fast");
+    $(".demo__card-cont").css("animation-duration", DELAY);
     $(".demo__card-cont").show();
   }
 
   function showScreen() {
+    $(".demo").removeClass("animated zoomOut");
     $(".demo").show();
     $(".demo").addClass("animated zoomIn");
   }
 
   function showMatchCards() {
-    $(".match__container").addClass("animated zoomIn show fast delay-1s");
+    $(".match__container").removeClass("animated zoomOut");
+    $(".match__container").addClass("animated zoomIn fast");
+    $(".match__container").css("animation-duration", DELAY);
+    setTimeout(function() {
+        $(".match__container").show();
+        $(".match__container").css("display", "flex");
+    }, DELAY);
   }
 
   function showVideo() {
-    $(".video__container").addClass("animated zoomIn show fast delay-1s");
-    player.playVideo();
+    $(".video__container").removeClass("animated zoomOut");
+    $(".video__container").addClass("animated zoomIn fast");
+    $(".video__container").css("animation-duration", "1s");
+    setTimeout(function() {
+        $(".video__container").show();
+        $(".video__container").css("display", "block");
+        player.playVideo();
+    }, DELAY);
   }
 
   function showSlots() {
-    $(".slots__container").addClass("animated zoomIn show fast delay-1s");
+    $(".slots__container").removeClass("animated zoomOut");
+    $(".slots__container").addClass("animated zoomIn fast");
+    $(".slots__container").css("animation-duration", "1s");
+    setTimeout(function() {
+        $(".slots__container").show();
+        $(".slots__container").css("display", "block");
+    }, DELAY);
   }
 
   function hideVideo() {
+    $(".video__container").removeClass("animated zoomIn");
     $(".video__container").addClass("animated zoomOut fast delay-1s");
+    $(".video__container").css("animation-duration", DELAY);
+    //console.log("hide");
+    setTimeout(function() {
+      $(".video__container").hide();
+    }, DELAY);
   }
 
   $(document).on("mousedown touchstart", ".demo__card:not(.inactive)", function(e) {
@@ -233,7 +274,7 @@
 
 
   var span = document.getElementsByClassName("close")[0];
-
+  
   // When the user clicks on <span> (x), close the modal
   span.onclick = function() {
     $("#myModal").css("display", "none");
@@ -244,7 +285,7 @@
     this._id = id;
     this._heightBox = $("#"+ this._id).css("height");
     this._heightBox = this._heightBox.replace(/px/g, '');
-    console.log(this._heightBox);
+    //console.log(this._heightBox);
     this._curNum = 1;
   }
 
@@ -259,36 +300,33 @@
   }
 
   rotateModule.prototype.setNumber = function(nextNum){
-    console.log(nextNum);
-    this.move2Number(nextNum);
+    //console.log(nextNum);
+    //this.move2Number(nextNum);
+    $("#" + this._id).text(nextNum);
   }
 
   rotateModule.prototype.move2Number = function(desNum){
-    $("#" +this._id + " .list__number").css("transform", "translateY(-" + desNum * this._heightBox + "px)" );
+    // $("#" +this._id + " .list__number").css("transform", "translateY(-" + desNum * this._heightBox + "px)" );
+    $("#" + self._id).text(desNum);
   }
 
   function triggerRotate() {
     var listSlots = [ "slot_1", "slot_2", "slot_3", "slot_4", "slot_5"]
-    var values = [1,1,1,1,1];
     listSlots.forEach(function(slot,i){
       let idInterval
-      let _i = i;
-      console.log(slot,i);
+      let newObj = new rotateModule(slot);
+      newObj.setNumber(1);
+
       setTimeout(function(){
-        var newObj = new rotateModule(slot);
-        newObj.genListNumber();
-        newObj.setNumber(0);
         idInterval = setInterval(function(){
-          const randomNum = Math.floor(Math.random() * (8 - 0 + 1));
-          values[i] = randomNum;
-          newObj.setNumber(randomNum)
-        },70)
-      }, i*3000);
+          newObj.setNumber(getRandom());
+        },30)
+      }, i*2000);
 
       setTimeout(function(){
         clearInterval(idInterval);
-        console.log(values);
-      }, i*3000 + 3000);
+        //console.log(values);
+      }, i*2000 + 2000);
     });
   }
 
@@ -320,19 +358,27 @@ var tag = document.createElement('script');
   var done = false;
   function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
-      setTimeout(stopVideo, 6000);
+      idTimeout = setTimeout(function(){
+        stopVideo();
+        showSlots();
+      }, 5000);
+      console.log(idTimeout);
       done = true;
     }
   }
   function stopVideo() {
-    player.stopVideo();
-    player.destroy();
+    //console.log("player: ",player);
+    player && player.stopVideo();
+    // player && player.destroy();
     hideVideo();
-    showSlots();
   }
 
   $("#rotate-toggle").on("click", function(){
     triggerRotate();
+  })
+
+  $("#back").on("click", function(){
+    reset();
   })
 </script>
 
