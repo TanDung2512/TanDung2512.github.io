@@ -119,7 +119,7 @@
 
 <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
 <script defer src="https://www.gstatic.com/firebasejs/7.9.3/firebase-auth.js"></script>
-
+<script defer src="https://www.youtube.com/iframe_api"></script>
 <script
   src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
   integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
@@ -129,7 +129,22 @@
 
 
 <script defer src="./init-firebase.js"></script>
+
 <script>
+  var tag = document.createElement('script');
+
+  tag.src = "https://www.youtube.com/iframe_api";
+  var player;
+  function onYouTubeIframeAPIReady() {
+    player = new YT.Player('player', {
+      height: '390',
+      width: '640',
+      videoId: 'pd2pwuXU-js',
+      //events: {
+      //  'onStateChange': onPlayerStateChange
+      // }
+    });
+  }
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyDIXHOEQxxecIwg3hwGEd75MnAVjwcH3aI",
@@ -175,7 +190,6 @@
     //console.log(idTimeout);
     idTimeout && clearTimeout(idTimeout);
     idTimeout = null;
-    stopVideo && stopVideo();
     $(".match__container").hide();
     $(".video__container").hide();
     $(".slots__container").hide();
@@ -269,7 +283,6 @@
     setTimeout(function() {
         $(".slots__container").show();
         $(".slots__container").css("display", "block");
-        player && player.stopVideo();
     }, DELAY);
   }
 
@@ -373,27 +386,6 @@
   }
 
 
-
-var tag = document.createElement('script');
-
-  tag.src = "https://www.youtube.com/iframe_api";
-  var firstScriptTag = document.getElementsByTagName('script')[0];
-  firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-  // 3. This function creates an <iframe> (and YouTube player)
-  //    after the API code downloads.
-  var player;
-  function onYouTubeIframeAPIReady() {
-    player = new YT.Player('player', {
-      height: '390',
-      width: '640',
-      videoId: 'pd2pwuXU-js',
-      //events: {
-      //  'onStateChange': onPlayerStateChange
-      // }
-    });
-  }
-
   // 5. The API calls this function when the player's state changes.
   //    The function indicates that when playing a video (state=1),
   //    the player should play for six seconds and then stop.
@@ -411,7 +403,6 @@ var tag = document.createElement('script');
   }
   function stopVideo() {
     //console.log("player: ",player);
-    player && player.stopVideo();
     // player && player.destroy();
     hideVideo();
   }
