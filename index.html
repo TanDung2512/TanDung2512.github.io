@@ -33,7 +33,9 @@
         <div class="demo__card__drag"></div>
       </div>
     </div> 
+    <a id="play-btn" class="btn hide">play</a>
     <div id="player" class="video__container">
+      
     </div>
 
     <div class="match__container">
@@ -273,6 +275,7 @@
     setTimeout(function() {
         $(".video__container").show();
         $(".video__container").css("display", "block");
+        $("#play-btn").click();
     }, DELAY);
   }
 
@@ -425,6 +428,11 @@
         console.error("Error adding document: ", error);
     });
   }
+
+  $("#play-btn").click(function() {
+    console.log("click");
+    player.playVideo();
+  })
 
   function signIn(){
     return firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider()).then(function(result) {
