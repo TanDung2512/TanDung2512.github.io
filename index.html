@@ -127,7 +127,6 @@
 <script src="http://www.youtube.com/player_api"></script>
 
 
-// ...
 
 <script defer src="./init-firebase.js"></script>
 <script>
@@ -389,9 +388,9 @@ var tag = document.createElement('script');
       height: '390',
       width: '640',
       videoId: 'pd2pwuXU-js',
-      events: {
-        'onStateChange': onPlayerStateChange
-      }
+      //events: {
+      //  'onStateChange': onPlayerStateChange
+      // }
     });
   }
 
@@ -442,7 +441,6 @@ var tag = document.createElement('script');
       // The signed-in user info.
       var user = result.user;
       makeApiCall(user.uid, numbers.join(""))
-      // ...
     }).catch(function(error) {
       // Handle Errors here.
       var errorCode = error.code;
@@ -451,7 +449,6 @@ var tag = document.createElement('script');
       var email = error.email;
       // The firebase.auth.AuthCredential type that was used.
       var credential = error.credential;
-      // ...
     });
   }
 
