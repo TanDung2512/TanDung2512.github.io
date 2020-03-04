@@ -259,7 +259,6 @@
     setTimeout(function() {
         $(".video__container").show();
         $(".video__container").css("display", "block");
-        // player.playVideo();
     }, DELAY);
   }
 
@@ -270,6 +269,7 @@
     setTimeout(function() {
         $(".slots__container").show();
         $(".slots__container").css("display", "block");
+        player && player.stopVideo();
     }, DELAY);
   }
 
