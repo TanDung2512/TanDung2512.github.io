@@ -423,6 +423,7 @@ var tag = document.createElement('script');
   $("#back").on("click", function(){
     reset();
   })
+  reset();
 
   function makeApiCall(uid,number) {
     var db = firebase.firestore();
