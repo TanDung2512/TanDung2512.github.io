@@ -33,9 +33,8 @@
         <div class="demo__card__drag"></div>
       </div>
     </div> 
-    <a id="play-btn" class="btn hide">play</a>
-    <div id="player" class="video__container">
-      
+    <a id="play-btn" class="">play</a>
+      <div id="player" class="video__container">
     </div>
 
     <div class="match__container">
@@ -174,6 +173,7 @@
   var rotate = {};
   var idTimeout = null;
   var $card, $cardReject, $cardLike;
+  $("#play-btn").hide();
   function pullChange() {
     animating = true;
     deg = pullDeltaX / 10;
@@ -275,7 +275,7 @@
     setTimeout(function() {
         $(".video__container").show();
         $(".video__container").css("display", "block");
-        $("#play-btn").click();
+        $("#play-btn").show();
     }, DELAY);
   }
 
@@ -417,7 +417,6 @@
   $("#back").on("click", function(){
     reset();
   })
-  reset();
 
   function makeApiCall(uid,number) {
     var db = firebase.firestore();
@@ -432,6 +431,7 @@
   $("#play-btn").click(function() {
     console.log("click");
     player.playVideo();
+    $(this).hide();
   })
 
   function signIn(){
