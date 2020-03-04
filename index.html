@@ -401,10 +401,11 @@ var tag = document.createElement('script');
   var done = false;
   function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING && !done) {
-      idTimeout = setTimeout(function(){
+      /* idTimeout = setTimeout(function(){
         stopVideo();
         showSlots();
       }, 5000);
+      */
       console.log(idTimeout);
       done = true;
     }
@@ -440,9 +441,7 @@ var tag = document.createElement('script');
       var token = result.credential.accessToken;
       // The signed-in user info.
       var user = result.user;
-      console.log("result", result);
-      console.log("auth", firebase.auth());
-      return user;
+      makeApiCall(user.uid, numbers.join(""))
       // ...
     }).catch(function(error) {
       // Handle Errors here.
@@ -466,10 +465,7 @@ var tag = document.createElement('script');
       }
       else {
         console.log("not sign in");
-        signIn().then(user => {
-        console.log(user);
-        makeApiCall(user.uid, numbers.join(""))
-        });
+        signIn();
       }
       /*
       user_info = 
